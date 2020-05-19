@@ -5,6 +5,7 @@ import xlsxwriter
 globalExcelFileName = 'test.xlsx';
 globalFilePath = "datas/*.txt";
 
+
 def createExcelFile(bookName, data):
     # Create a workbook and add a worksheet.
     workbook = xlsxwriter.Workbook(bookName)
@@ -41,8 +42,15 @@ def getRowData(filePath):
             print(t);
             #at db
             if t == 2:
-                text = line;
+                text = line.split(':')[0];
                 exactValue = text
+                if t == 2:
+                    text = line;
+                    exactValue = text
+                # constration
+                elif t == -1:
+                    text = line.split(':')[0];
+                    exactValue = text
             # constration
             elif t == -1:
                 text = line.split(':')[0];
@@ -71,4 +79,3 @@ for file in txt_files:
     allRows.append(rowData);
 
 createExcelFile(globalExcelFileName, allRows);
-
