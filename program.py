@@ -2,8 +2,8 @@ import glob
 import os
 import xlsxwriter
 
-globalExcelFileName = 'Deneme.xlsx';
-globalFilePath = "/Users/kali/Desktop/akin/pm_ornek/*.txt";
+globalExcelFileName = 'test.xlsx';
+globalFilePath = "datas/*.txt";
 
 
 def createExcelFile( bookName , data ):   
