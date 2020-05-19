@@ -21,7 +21,7 @@ def createExcelFile(bookName, data):
     for row_num, item in enumerate(data):
         for row_num2, item2 in enumerate(item):
             worksheet.write(col, row_num2, item2)
-        col = col +1
+        col = col + 1
     workbook.close()
 
 
@@ -31,23 +31,39 @@ def getRowData(filePath):
     dateValue, hourValue = baseName.split(' ');
     hourValue = hourValue.replace(".txt", "");
 
-    lines=[dateValue, hourValue]
+    lines = [dateValue, hourValue]
+    exactValue ='';
     # parsing file contents
     with open(filePath, 'r') as f:
         for line in f:
-            # in python 2
-            # print line
-            # in python 3
-            lines.append(line);
+            print(line);
+            t = line.find(':');
+            print(t);
+            #at db
+            if t == 2:
+                text = line;
+                exactValue = text
+            # constration
+            elif t == -1:
+                text = line.split(':')[0];
+                exactValue = text
+            #pm s
+            elif t >= 0:
+                umText, umValue = line.split(':')
+                exactValue = umValue;
 
-        f.close()
+            lines.append(exactValue);
+            exactValue='';
+
+    f.close()
+    print(lines);
 
     # return all rowData
     return lines;
 
 
 allRows = [];
-
+allRows.append(['Date', 'Hour', 'Cons.', '05um', '10um', '25um', '50um', '100um', 'atrh', 'dtwb']);
 txt_files = glob.glob(globalFilePath);
 
 for file in txt_files:
@@ -55,3 +71,4 @@ for file in txt_files:
     allRows.append(rowData);
 
 createExcelFile(globalExcelFileName, allRows);
+
